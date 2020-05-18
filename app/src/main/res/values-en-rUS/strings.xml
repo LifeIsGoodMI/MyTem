@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyTem</string>
+    <string name="search_view_query_hint">Enter product...</string>
+    <string name="search_history_tab">Search History</string>
+    <string name="shopping_list_tab">Shopping List</string>
+    <string name="search_results_count">Results</string>
+    <string name="search_history_empty">No existing search history.</string>
+    <string name="place_type_supermarket">Supermarket</string>
+    <string name="place_type_drug_store">Drug store</string>
+    <string name="place_type_liquor_store">Liquor store</string>
+    <string name="place_type_convenience_store">Convenience store</string>
+    <string name="place_type_store">Store</string>
+    <string name="business_closed_today">Closed</string>
+    <string name="business_opening_hours_today_prefix">Today</string>
+    <string name="shopping_list_tab_count">Lists saved</string>
+    <string name="shopping_list_tab_count_single">List saved</string>
+    <string name="shopping_list_tab_add">Create new list</string>
+    <string name="shopping_list_tab_empty">No shopping lists found</string>
+    <string name="shopping_list_builder_header">Create shopping list</string>
+    <string name="shopping_list_builder_description">Description...</string>
+    <string name="shopping_list_builder_add_product">Add Product</string>
+</resources>

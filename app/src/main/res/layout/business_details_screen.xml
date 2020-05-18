@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ImageView
+        android:id="@+id/businessDetailsPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:maxHeight="250dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/businessDetailsBackground"
+        app:srcCompat="@drawable/mytem_blue_image" />
+
+    <ImageView
+        android:id="@+id/businessDetailsBackground"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleType="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mytem_blue_image" />
+
+    <SearchView
+        android:id="@+id/businessDetailsSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:closeIcon="@drawable/cross_small"
+        android:iconifiedByDefault="false"
+        android:outlineProvider="none"
+        android:queryBackground="@android:color/transparent"
+        android:queryHint="@string/search_view_query_hint"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:searchIcon="@drawable/search_icon_small"
+        android:theme="@style/SearchViewTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </SearchView>
+
+    <ImageView
+        android:id="@+id/businessDetailsBackgroundShadow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:translationY="-10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/businessDetailsPhoto"
+        app:srcCompat="@drawable/transitional_shadow" />
+
+    <ImageView
+        android:id="@+id/businessDetailsRoundRect"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:translationY="-50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsPhoto"
+        app:srcCompat="@drawable/round_rect" />
+
+    <ImageButton
+        android:id="@+id/businessDetailsMapsButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:translationY="-55dp"
+        android:scaleType="centerCrop"
+        android:background="#00ffffff"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsPhoto"
+        app:srcCompat="@drawable/google_maps_icon" />
+
+    <!--
+    <ImageView
+        android:id="@+id/businessDetailsRating"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:translationY="-30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsRoundRect"
+        app:srcCompat="@drawable/rating_icon" />
+        -->
+
+    <RatingBar
+        android:id="@+id/businessDetailsRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:progressTint="#0081A1"
+        android:scaleX="0.5"
+        android:scaleY=".5"
+        android:translationY="-45dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsRoundRect" />
+
+    <TextView
+        android:id="@+id/businessDetailsType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Supermarkt"
+        android:translationY="-60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsRating"/>
+
+    <TextView
+        android:id="@+id/businessDetailsAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationY="-40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsRating"
+        android:text="Waffenschmidtstraße 9, 50767 Köln" />
+
+    <TextView
+        android:id="@+id/businessDetailsOpeningHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationY="-40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsAddress"
+        android:text="Geöffnet - Schließt um 22:00" />
+
+    <Space
+        android:id="@+id/businessDetailsMapAnchor"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:translationY="-40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/businessDetailsOpeningHours" />
+
+    <fragment
+        android:id="@+id/businessDetailsGoogleMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></fragment>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

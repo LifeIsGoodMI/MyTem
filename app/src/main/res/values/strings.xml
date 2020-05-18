@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MyTem</string>
+
+    <string name="search_view_query_hint">Produkt eingeben...</string>
+    <string name="search_history_tab">Suchverlauf</string>
+    <string name="shopping_list_tab">Einkaufsliste</string>
+    <string name="search_results_count">Ergebnisse</string>
+    <string name="search_history_empty">Keine zuletzt gesuchten Produkte verfugbar</string>
+
+    <string name="place_type_supermarket">Supermarkt</string>
+    <string name="place_type_drug_store">Drogerie</string>
+    <string name="place_type_liquor_store">Getränkemarkt</string>
+    <string name="place_type_convenience_store">Gemischtwarenladen</string>
+    <string name="place_type_store">Kiosk</string>
+    <string name="business_closed_today">Geschlossen</string>
+    <string name="business_opening_hours_today_prefix">Heute</string>
+    <string name="shopping_list_tab_count">Listen gespeichert</string>
+    <string name="shopping_list_tab_count_single">Liste gespeichert</string>
+    <string name="shopping_list_tab_add">Neue Liste erstellen</string>
+    <string name="shopping_list_tab_empty">Keine Einkaufslisten gefunden</string>
+    <string name="shopping_list_builder_header">Einkaufsliste erstellen</string>
+    <string name="shopping_list_builder_description">Beschreibung...</string>
+    <string name="shopping_list_builder_add_product">Produkt hinzufügen</string>
+</resources>
