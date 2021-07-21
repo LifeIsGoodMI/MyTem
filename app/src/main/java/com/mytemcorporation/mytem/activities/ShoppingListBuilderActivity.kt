@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.shopping_list_tab.*
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.adapters.ShoppingListBuilderAdapter
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.list
 
 class ShoppingListBuilderActivity : AppCompatActivity()
 {
@@ -30,7 +30,11 @@ class ShoppingListBuilderActivity : AppCompatActivity()
 
         GetViews()
 
-        productAdapter = ShoppingListBuilderAdapter(this, emptyArray())
+        productAdapter =
+            ShoppingListBuilderAdapter(
+                this,
+                emptyArray()
+            )
 
         addProductButton.setOnClickListener {
             val intent = Intent(this, ShoppingListSearchActivity::class.java)
@@ -66,7 +70,9 @@ class ShoppingListBuilderActivity : AppCompatActivity()
     {
         super.onNewIntent(intent)
 
-        val alteredProducts: ArrayList<Product> = intent!!.getParcelableArrayListExtra(ShoppingListSearchAlteredProductsParcelable)
+        val alteredProducts: ArrayList<Product> = intent!!.getParcelableArrayListExtra(
+            ShoppingListSearchAlteredProductsParcelable
+        )
         products = alteredProducts
         UpdateProductList()
     }
@@ -82,7 +88,9 @@ class ShoppingListBuilderActivity : AppCompatActivity()
     // If the edit button has been pressed on a shopping list, the specific shopping list will be loaded in.
     private fun TryReadLoadedList()
     {
-        val loadedShoppingList = intent.getParcelableExtra<ShoppingList>(ShoppingListBuilderLoadedShoppingListParcelable)
+        val loadedShoppingList = intent.getParcelableExtra<ShoppingList>(
+            ShoppingListBuilderLoadedShoppingListParcelable
+        )
         if (loadedShoppingList == null)
             return
 
@@ -111,8 +119,16 @@ class ShoppingListBuilderActivity : AppCompatActivity()
         if (listDescription.editText!!.text.toString() == "")
             return
 
-        val shoppingList = ShoppingList(listDescription.editText!!.text.toString(), products.toTypedArray())
+        val shoppingList = ShoppingList(
+            listDescription.editText!!.text.toString(),
+            products.toTypedArray()
+        )
         val shoppingListJson = Json.stringify(ShoppingList.serializer(), shoppingList)
-        FileManager.WriteAdditiveToFile(this, ShoppingListsFileName, shoppingListJson, ShoppingListFileMaxLineCount, { s -> s.contains(shoppingList.description)})
+        FileManager.WriteAdditiveToFile(
+            this,
+            ShoppingListsFileName,
+            shoppingListJson,
+            ShoppingListFileMaxLineCount,
+            { s -> s.contains(shoppingList.description) })
     }
 }

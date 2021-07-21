@@ -1,6 +1,5 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.client.Index
 import com.algolia.search.helper.deserialize
@@ -18,6 +16,8 @@ import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.adapters.ProductAdapter
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
 
@@ -46,11 +46,21 @@ class ProductSearchActivity : AppCompatActivity()
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
             {
                 HideAndroidKeyboard(searchView)
-                OnProductItemClick(this@ProductSearchActivity, productAdapter, position)
+                OnProductItemClick(
+                    this@ProductSearchActivity,
+                    productAdapter,
+                    position
+                )
             }
         })
 
-        productAdapter = ProductAdapter(this, emptyArray(), R.layout.product_list_element, R.id.productListIcon, R.id.productListButton)
+        productAdapter = ProductAdapter(
+            this,
+            emptyArray(),
+            R.layout.product_list_element,
+            R.id.productListIcon,
+            R.id.productListButton
+        )
         productList.adapter = productAdapter
 
         SetupSearchView()
@@ -117,7 +127,8 @@ class ProductSearchActivity : AppCompatActivity()
             }
         })
 
-        val closeButton = GetSearchViewCloseButton(searchView)
+        val closeButton =
+            GetSearchViewCloseButton(searchView)
         closeButton.setOnClickListener(object: View.OnClickListener
         {
             override fun onClick(v: View?)
@@ -164,7 +175,12 @@ class ProductSearchActivity : AppCompatActivity()
         {
             val product = productAdapter.getItem(position)
             val serializedProductJSON = Json.stringify(Product.serializer(), product)
-            FileManager.WriteAdditiveToFile(activity, SearchHistoryFileName, serializedProductJSON, SearchHistoryFileMaxLineCount, { s -> s.contains(product.objectID) })
+            FileManager.WriteAdditiveToFile(
+                activity,
+                SearchHistoryFileName,
+                serializedProductJSON,
+                SearchHistoryFileMaxLineCount,
+                { s -> s.contains(product.objectID) })
 
             val intent = Intent(activity, BusinessResultsActivity::class.java)
             intent.putExtra(SearchQueryParcelable, product.productname)

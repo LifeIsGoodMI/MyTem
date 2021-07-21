@@ -1,6 +1,7 @@
 package com.mytemcorporation.mytem
 
 import android.content.Context
+import android.graphics.Bitmap
 import com.algolia.search.model.places.PlacesQuery
 import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.maps.model.Circle
@@ -15,7 +16,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.*
 import kotlinx.coroutines.*
 
-class GooglePlacesManager(context: Context)
+class GooglePlacesManager(private val context: Context)
 {
     private lateinit var placesClient: PlacesClient
     init
@@ -57,6 +58,35 @@ class GooglePlacesManager(context: Context)
 
         val task = placesClient.fetchPhoto(request.build()).addOnCompleteListener {
             onCompleteAction(it)
+        }
+    }
+
+
+    /**
+     * Performs a full google places search that invokes the passed in action with the resulting
+     * google place, google photo & fetched google place.
+     */
+    public fun FullGooglePlacesQuery(business: Business, position: LatLng,
+                                     onResultAction: (googlePlace: Place, googlePhoto: Bitmap, fetchedPlace: FetchedGooglePlace) -> Unit)
+    {
+        QueryPlaces(business.business_name, position) {
+            val place = it.result!!.autocompletePredictions[0]
+            val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS,
+                Place.Field.OPENING_HOURS, Place.Field.RATING, Place.Field.TYPES, Place.Field.PHOTO_METADATAS)
+
+            QueryDetailsFromPlace(place, fields){
+                val placeDetails = it.result!!.place
+                val photoMetadata = placeDetails.photoMetadatas!![0]
+
+                QueryPhotoFromPhotoMetaData(photoMetadata) {
+                    val placeType = GetPlaceType(context, placeDetails.types!!.toTypedArray())
+                    val fetchedGooglePlace = FetchedGooglePlace(business.objectID, business.toString(), placeDetails.id!!, placeDetails.name!!, placeDetails.latLng!!,
+                        placeDetails.address!!, placeDetails.openingHours!!, placeDetails.rating!!, placeType,
+                        placeDetails.photoMetadatas!!.get(0))
+
+                    onResultAction.invoke(placeDetails, it.result!!.bitmap, fetchedGooglePlace)
+                }
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SearchView
-import androidx.appcompat.widget.AppCompatImageView
+import com.mytemcorporation.mytem.*
 
 class MapsActivity : AppCompatActivity()
 {
@@ -23,12 +23,19 @@ class MapsActivity : AppCompatActivity()
 
         GetViews()
 
-        googlePlacesManager = GooglePlacesManager(this)
-        mapsHandler = GoogleMapsHandler(this, googlePlacesManager, R.id.mapsScreenGoogleMap)
+        googlePlacesManager =
+            GooglePlacesManager(this)
+        mapsHandler = GoogleMapsHandler(
+            this,
+            googlePlacesManager,
+            R.id.mapsScreenGoogleMap
+        )
 
         SetupSearchView()
 
-        val fetchedGooglePlaces: ArrayList<FetchedGooglePlace> = intent.getParcelableArrayListExtra(BusinessResultsParcelable)
+        val fetchedGooglePlaces: ArrayList<FetchedGooglePlace> = intent.getParcelableArrayListExtra(
+            BusinessResultsParcelable
+        )
         mapsHandler.ScheduleAction(mapsHandler.CenterMapOnMarkersAction, fetchedGooglePlaces.toTypedArray())
     }
 
@@ -78,7 +85,8 @@ class MapsActivity : AppCompatActivity()
             }
         })
 
-        val closeButton = GetSearchViewCloseButton(searchView)
+        val closeButton =
+            GetSearchViewCloseButton(searchView)
         closeButton.setOnClickListener(object: View.OnClickListener
         {
             override fun onClick(v: View?)

@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ImageView
+import com.mytemcorporation.mytem.Product
 import com.squareup.picasso.Picasso
 
 class ProductAdapter(private var context: Context, private var items: Array<Product>,

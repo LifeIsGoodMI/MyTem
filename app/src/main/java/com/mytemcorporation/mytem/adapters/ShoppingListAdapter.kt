@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.TextView
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.activities.MainScreenActivity
+import com.mytemcorporation.mytem.activities.ShoppingListBuilderActivity
 
 class ShoppingListAdapter(private var context: Context, private var items: Array<ShoppingList>) : BaseAdapter()
 {
@@ -49,11 +52,16 @@ class ShoppingListAdapter(private var context: Context, private var items: Array
         }
 
         deleteButton.setOnClickListener {
-            val success = FileManager.TryDeleteLineFromFile(context, ShoppingListsFileName, items[position].description)
+            val success =
+                FileManager.TryDeleteLineFromFile(
+                    context,
+                    ShoppingListsFileName,
+                    items[position].description
+                )
             if (success)
             {
                 val activity = context as MainScreenActivity
-                activity.UpdateMainScreenPagerAdapter()
+                activity.UpdateMainScreenRecyclerViewAdapter()
             }
         }
 

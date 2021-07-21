@@ -1,10 +1,21 @@
 package com.mytemcorporation.mytem
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.client.Index
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
+import com.algolia.search.model.search.Point
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.OpeningHours
 import com.google.android.libraries.places.api.model.Place
@@ -37,7 +48,7 @@ public fun GetSearchViewCloseButton(searchView: SearchView) : AppCompatImageView
     return closeButton
 }
 
-
+//region Place opening
 public fun GetGoogleDayToday() : Int
 {
     // Calendar.DAY_OF_WEEK returns 1 for Sunday
@@ -65,8 +76,28 @@ public fun IsGooglePlaceCurrentlyOpen(context: Context, openingHours: OpeningHou
     return !openingHours.weekdayText[day].contains(closedText)
 }
 
+public fun SortBusinessesByOpeningHours(context: Context, businesses: Array<Business>, googlePlaces: Array<FetchedGooglePlace>) : Array<Business>
+{
+    var sortedBusinesses = businesses.toMutableList()
+    var closedBusinesses = mutableListOf<Business>()
+    for (place in googlePlaces)
+    {
+        if (IsGooglePlaceCurrentlyOpen(context, place.openingHours))
+            continue
 
-public fun GetPlaceType(context: Context, types: List<Place.Type>) : String
+        val business = businesses.find { b -> b.objectID == place.objectID }
+        sortedBusinesses.remove(business)
+        closedBusinesses.add(business!!)
+    }
+
+    closedBusinesses.sortBy { it._rankingInfo.matchedGeoLocation.distance }
+    sortedBusinesses.addAll(closedBusinesses)
+
+    return sortedBusinesses.toTypedArray()
+}
+//endregion
+
+public fun GetPlaceType(context: Context, types: Array<Place.Type>) : String
 {
     if (types.contains(Place.Type.SUPERMARKET))
         return context.resources.getString(R.string.place_type_supermarket)
@@ -79,3 +110,39 @@ public fun GetPlaceType(context: Context, types: List<Place.Type>) : String
 
     return context.resources.getString(R.string.place_type_store)
 }
+
+//region Location Services
+public fun HasLocationPermissions(context: Context) : Boolean
+{
+    val coarseLocationPermissionGranted = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    val fineLocationPermissionGranted = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    if (coarseLocationPermissionGranted && fineLocationPermissionGranted)
+        return true
+
+    return false
+}
+
+@SuppressLint("MissingPermission")
+public fun GetDeviceLocation(context: Context) : Point
+{
+    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val locationProvider = locationManager.allProviders[0]
+    val location = locationManager.getLastKnownLocation(locationProvider)
+    val locationPoint = Point(location.latitude.toFloat(), location.longitude.toFloat())
+
+    return locationPoint
+}
+//endregion
+
+//region Algolia
+public fun InitAlgolia(indexName: String) : Index
+{
+    val appID = ApplicationID(AlgoliaAppID)
+    val apiKey = com.algolia.search.model.APIKey(AlgoliaAPIKey)
+    val indexName = IndexName(indexName)
+
+    val searchClient = ClientSearch(appID, apiKey)
+    val index = searchClient.initIndex(indexName)
+    return index
+}
+//endregion

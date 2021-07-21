@@ -1,30 +1,21 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
-import androidx.core.app.ActivityCompat
-import com.algolia.search.client.ClientSearch
 import com.algolia.search.client.Index
 import com.algolia.search.helper.deserialize
-import com.algolia.search.model.APIKey
-import com.algolia.search.model.ApplicationID
-import com.algolia.search.model.IndexName
-import com.algolia.search.model.search.Point
 import com.algolia.search.model.search.Query
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
 import com.mapbox.api.geocoding.v5.MapboxGeocoding
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.adapters.BusinessAdapter
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,11 +34,10 @@ class BusinessResultsActivity : AppCompatActivity()
     private lateinit var radiusSlider: SeekBar
     private lateinit var radiusText: TextView
 
-    private lateinit var searchClient: ClientSearch
     private lateinit var businessIndex: Index
 
     private var blockQueryTextChangeEvent = false
-    private lateinit var lastFoundBusinesses: List<Business>
+    private lateinit var lastFoundBusinesses: Array<Business>
     private var fetchedGooglePlaces: MutableList<FetchedGooglePlace> = mutableListOf()
     private var fetchedGooglePlacesImages: HashMap<String, Bitmap?> = HashMap()
 
@@ -61,7 +51,7 @@ class BusinessResultsActivity : AppCompatActivity()
 
         googlePlacesManager = GooglePlacesManager(this)
 
-        InitAlgolia()
+        businessIndex = InitAlgolia(AlgoliaBusinessIndex)
         SetupSearchView()
         SetupBusinessList()
         SetupMapsButton()
@@ -169,7 +159,12 @@ class BusinessResultsActivity : AppCompatActivity()
     //region Business List
     private fun SetupBusinessList()
     {
-        businessAdapter = BusinessAdapter(this, emptyArray(), R.layout.business_list_element, R.id.businessListButton)
+        businessAdapter = BusinessAdapter(
+            this,
+            emptyArray(),
+            R.layout.business_list_element,
+            R.id.businessListButton
+        )
         businessList.adapter = businessAdapter
         businessList.setOnItemClickListener(object : AdapterView.OnItemClickListener
         {
@@ -214,27 +209,18 @@ class BusinessResultsActivity : AppCompatActivity()
         })*/
     }
 
-    @SuppressLint("MissingPermission")
     private suspend fun SearchBusinessesForProductAsync(query: String)
     {
         // TODO: Notify user that location permissions are required.
-        if (!CheckForLocationPermissions())
+        if (!HasLocationPermissions(this))
             return;
 
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val locationProvider = locationManager.allProviders[0]
-        val location = locationManager.getLastKnownLocation(locationProvider)
-        val locationPoint = Point(location.latitude.toFloat(), location.longitude.toFloat())
-
+        val locationPoint = GetDeviceLocation(this)
         val response = businessIndex.search(Query(query = query, aroundLatLng = locationPoint, getRankingInfo = true))
-        val businesses = response.hits.deserialize(Business.serializer())
+        lastFoundBusinesses = response.hits.deserialize(Business.serializer()).toTypedArray()
 
-        businessAdapter.setItems(businesses.toTypedArray())
-        businessList.adapter = null
-        businessList.adapter = businessAdapter
-
-        lastFoundBusinesses = businesses
-        resultCountText.text = businesses.count().toString()
+        UpdateBusinessList()
+        resultCountText.text = lastFoundBusinesses.count().toString()
 
         FetchGooglePlacesFromBusinesses()
     }
@@ -248,61 +234,30 @@ class BusinessResultsActivity : AppCompatActivity()
             val location = business._rankingInfo.matchedGeoLocation
             val position = LatLng(location.lat, location.lng)
 
-            googlePlacesManager.QueryPlaces(business.business_name, position) {
-                val place = it.result!!.autocompletePredictions[0]
-                val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS,
-                                    Place.Field.OPENING_HOURS, Place.Field.RATING, Place.Field.TYPES, Place.Field.PHOTO_METADATAS)
+            googlePlacesManager.FullGooglePlacesQuery(business, position) { place: Place, bitmap: Bitmap, fetchedGooglePlace: FetchedGooglePlace ->
 
-                googlePlacesManager.QueryDetailsFromPlace(place, fields){
-                    val placeDetails = it.result!!.place
-                    val photoMetadata = placeDetails.photoMetadatas!![0]
+                fetchedGooglePlaces.add(fetchedGooglePlace)
+                fetchedGooglePlacesImages.put(business.objectID, bitmap)
 
-                    googlePlacesManager.QueryPhotoFromPhotoMetaData(photoMetadata) {
-                        val placeType = GetPlaceType(this, placeDetails.types!!.toList())
-                        val fetchedGooglePlace = FetchedGooglePlace(business.objectID, business.toString(), placeDetails.id!!, placeDetails.name!!, placeDetails.latLng!!,
-                                                                    placeDetails.address!!, placeDetails.openingHours!!, placeDetails.rating!!, placeType,
-                                                                    placeDetails.photoMetadatas!!.get(0))
+                businessAdapter.SetFetchedGooglePlaces(fetchedGooglePlaces.toTypedArray())
+                businessAdapter.SetGooglePlacesImages(fetchedGooglePlacesImages)
+                businessList.adapter = null
+                businessList.adapter = businessAdapter
 
-                        fetchedGooglePlaces.add(fetchedGooglePlace)
-                        fetchedGooglePlacesImages.put(business.objectID, it.result!!.bitmap)
-
-                        businessAdapter.SetFetchedGooglePlaces(fetchedGooglePlaces.toTypedArray())
-                        businessAdapter.SetGooglePlacesImages(fetchedGooglePlacesImages)
-                        businessList.adapter = null
-                        businessList.adapter = businessAdapter
-
-                        if (fetchedGooglePlaces.count() == lastFoundBusinesses.count())
-                        {
-                            SortBusinessesByOpeningHours()
-                            //FilterBusinessesByRadius(DefaultFilterRadius)
-                        }
-                    }
+                if (fetchedGooglePlaces.count() == lastFoundBusinesses.count())
+                {
+                    lastFoundBusinesses =
+                        SortBusinessesByOpeningHours(
+                            this,
+                            lastFoundBusinesses,
+                            fetchedGooglePlaces.toTypedArray()
+                        )
+                    UpdateBusinessList()
+                    //FilterBusinessesByRadius(DefaultFilterRadius)
                 }
+
             }
         }
-    }
-
-    private fun SortBusinessesByOpeningHours()
-    {
-        var sortedBusinesses = lastFoundBusinesses.toMutableList()
-        var closedBusinesses = mutableListOf<Business>()
-        for (place in fetchedGooglePlaces)
-        {
-            if (IsGooglePlaceCurrentlyOpen(this, place.openingHours))
-                continue
-
-            val business = lastFoundBusinesses.find { b -> b.objectID == place.objectID }
-            sortedBusinesses.remove(business)
-            closedBusinesses.add(business!!)
-        }
-
-        closedBusinesses.sortBy { it._rankingInfo.matchedGeoLocation.distance }
-        sortedBusinesses.addAll(closedBusinesses)
-
-        lastFoundBusinesses = sortedBusinesses
-        businessAdapter.setItems(lastFoundBusinesses.toTypedArray())
-        businessList.adapter = null
-        businessList.adapter = businessAdapter
     }
 
     private fun FilterBusinessesByRadius(radiusInKm: Int)
@@ -310,6 +265,13 @@ class BusinessResultsActivity : AppCompatActivity()
         val radiusInMeters = radiusInKm * 1000
         var businesses = lastFoundBusinesses.filter { it._rankingInfo.matchedGeoLocation.distance < radiusInMeters }
         businessAdapter.setItems(businesses.toTypedArray())
+        businessList.adapter = null
+        businessList.adapter = businessAdapter
+    }
+
+    private fun UpdateBusinessList()
+    {
+        businessAdapter.setItems(lastFoundBusinesses)
         businessList.adapter = null
         businessList.adapter = businessAdapter
     }
@@ -332,29 +294,6 @@ class BusinessResultsActivity : AppCompatActivity()
         })
     }
     //endregion
-
-    //region Utility
-    private fun CheckForLocationPermissions() : Boolean
-    {
-        val coarseLocationPermissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        val fineLocationPermissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        if (coarseLocationPermissionGranted && fineLocationPermissionGranted)
-            return true
-
-        return false
-    }
-
-    private fun InitAlgolia()
-    {
-        val appID = ApplicationID(AlgoliaAppID)
-        val apiKey = APIKey(AlgoliaAPIKey)
-        val indexName = IndexName(AlgoliaBusinessIndex)
-
-        searchClient = ClientSearch(appID, apiKey)
-        businessIndex = searchClient.initIndex(indexName)
-    }
-    //endregion
-
 
     //region Mapbox EXPERIMENTAL
     private fun MapboxSearch()

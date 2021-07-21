@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,8 @@ import com.algolia.search.helper.deserialize
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.adapters.ShoppingListSearchAdapter
 import kotlinx.coroutines.runBlocking
 
 class ShoppingListSearchActivity : AppCompatActivity()
@@ -40,8 +42,14 @@ class ShoppingListSearchActivity : AppCompatActivity()
         GetViews()
         InitAlgolia()
 
-        productAdapter = ShoppingListSearchAdapter(this, emptyArray())
-        products = intent.getParcelableArrayListExtra<Product>(ShoppingListBuilderProductsParcelable).toTypedArray()
+        productAdapter =
+            ShoppingListSearchAdapter(
+                this,
+                emptyArray()
+            )
+        products = intent.getParcelableArrayListExtra<Product>(
+            ShoppingListBuilderProductsParcelable
+        ).toTypedArray()
 
         productAdapter.SetProducts(products.toMutableList())
         productList.adapter = productAdapter

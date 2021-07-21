@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,6 +9,10 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.mytemcorporation.mytem.Business
+import com.mytemcorporation.mytem.FetchedGooglePlace
+import com.mytemcorporation.mytem.IsGooglePlaceCurrentlyOpen
+import com.mytemcorporation.mytem.R
 
 class BusinessAdapter(private var context: Context, private var items: Array<Business>, private var layout: Int, private var elementId: Int) : BaseAdapter()
 {
@@ -52,7 +56,11 @@ class BusinessAdapter(private var context: Context, private var items: Array<Bus
 
         if (fetchedGooglePlace != null)
         {
-            closedOverlay.visibility = if (IsGooglePlaceCurrentlyOpen(context, fetchedGooglePlace!!.openingHours)) View.GONE else View.VISIBLE
+            closedOverlay.visibility = if (IsGooglePlaceCurrentlyOpen(
+                    context,
+                    fetchedGooglePlace!!.openingHours
+                )
+            ) View.GONE else View.VISIBLE
         }
 
         if (placeImage != null)

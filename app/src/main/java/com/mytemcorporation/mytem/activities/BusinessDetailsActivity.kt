@@ -1,4 +1,4 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.libraries.places.api.model.Place
-import java.time.LocalDateTime
-import java.util.*
+import com.mytemcorporation.mytem.*
 
 class BusinessDetailsActivity : AppCompatActivity()
 {
@@ -38,8 +34,13 @@ class BusinessDetailsActivity : AppCompatActivity()
 
         fetchedGooglePlace = intent.getParcelableExtra(SingleBusinessResultParcelable)
 
-        googlePlacesManager = GooglePlacesManager(this)
-        mapsHandler = GoogleMapsHandler(this, googlePlacesManager, R.id.businessDetailsGoogleMap)
+        googlePlacesManager =
+            GooglePlacesManager(this)
+        mapsHandler = GoogleMapsHandler(
+            this,
+            googlePlacesManager,
+            R.id.businessDetailsGoogleMap
+        )
 
         googleMapsButton.setOnClickListener {
             mapsHandler.OpenMapsAppFromUri(fetchedGooglePlace)
@@ -77,7 +78,11 @@ class BusinessDetailsActivity : AppCompatActivity()
         val address = fetchedGooglePlace.address
         val addressStrings = address.split(",")
         val formattedAddress = addressStrings[0] + ", " + addressStrings[1]
-        val formattedOpeningHours = FormatOpeningHoursToday(this, fetchedGooglePlace.openingHours)
+        val formattedOpeningHours =
+            FormatOpeningHoursToday(
+                this,
+                fetchedGooglePlace.openingHours
+            )
 
         businessRating.rating = fetchedGooglePlace.rating.toFloat()
         businessTypeText.text = fetchedGooglePlace.type
@@ -120,7 +125,8 @@ class BusinessDetailsActivity : AppCompatActivity()
             }
         })
 
-        val closeButton = GetSearchViewCloseButton(searchView)
+        val closeButton =
+            GetSearchViewCloseButton(searchView)
         closeButton.setOnClickListener(object: View.OnClickListener
         {
             override fun onClick(v: View?)

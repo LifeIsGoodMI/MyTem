@@ -1,19 +1,19 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.activities
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import java.util.*
+import com.google.android.material.tabs.TabLayoutMediator
+import com.mytemcorporation.mytem.*
+import com.mytemcorporation.mytem.adapters.MainScreenRecyclerViewAdapter
 
 
 class MainScreenActivity : AppCompatActivity()
@@ -22,7 +22,7 @@ class MainScreenActivity : AppCompatActivity()
     private var blockQueryTextChangeEvent = false
 
     private lateinit var tabLayout: TabLayout
-    private lateinit var mainScreenPagerAdapter: MainScreenPagerAdapter
+    private lateinit var searchHistoryAdapter: MainScreenRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -30,17 +30,24 @@ class MainScreenActivity : AppCompatActivity()
         setContentView(R.layout.main_screen)
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-        FileManager.DeleteFile(this, SearchHistoryFileName)
+        //FileManager.DeleteFile(this, SearchHistoryFileName)
 
         GetViews()
         SetupSearchView()
 
-        val viewPager = findViewById<ViewPager>(R.id.mainScreenViewPager)
-        mainScreenPagerAdapter = MainScreenPagerAdapter(this)
-        viewPager.adapter = mainScreenPagerAdapter
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.getTabAt(0)!!.setText(resources.getString(R.string.search_history_tab))
-        tabLayout.getTabAt(1)!!.setText(resources.getString(R.string.shopping_list_tab))
+        val viewPager2 = findViewById<ViewPager2>(R.id.mainScreenViewPager2)
+        searchHistoryAdapter =
+            MainScreenRecyclerViewAdapter(
+                this
+            )
+        viewPager2.adapter = searchHistoryAdapter
+        TabLayoutMediator(tabLayout, viewPager2, TabLayoutMediator.TabConfigurationStrategy { tab: TabLayout.Tab, i: Int ->
+            when(i)
+            {
+                0 -> tab.setText(getString(R.string.search_history_tab))
+                1 -> tab.setText(getString(R.string.shopping_list_tab))
+            }
+        }).attach()
     }
 
     override fun onStart()
@@ -57,13 +64,13 @@ class MainScreenActivity : AppCompatActivity()
     override fun onResume()
     {
         super.onResume()
-        UpdateMainScreenPagerAdapter()
+        UpdateMainScreenRecyclerViewAdapter()
     }
 
     override fun onRestart()
     {
         super.onRestart()
-        UpdateMainScreenPagerAdapter()
+        UpdateMainScreenRecyclerViewAdapter()
     }
 
     // Intent is not updated when the activity is resumed / restarted.
@@ -116,7 +123,8 @@ class MainScreenActivity : AppCompatActivity()
 
         })
 
-        val closeButton = GetSearchViewCloseButton(searchView)
+        val closeButton =
+            GetSearchViewCloseButton(searchView)
         closeButton.setOnClickListener(object: View.OnClickListener
         {
             override fun onClick(v: View?)
@@ -134,10 +142,8 @@ class MainScreenActivity : AppCompatActivity()
     }
     //endregion
 
-    public fun UpdateMainScreenPagerAdapter()
+    public fun UpdateMainScreenRecyclerViewAdapter()
     {
-        mainScreenPagerAdapter.notifyDataSetChanged()
-        tabLayout.getTabAt(0)!!.setText(resources.getString(R.string.search_history_tab))
-        tabLayout.getTabAt(1)!!.setText(resources.getString(R.string.shopping_list_tab))
+        searchHistoryAdapter.notifyDataSetChanged()
     }
 }

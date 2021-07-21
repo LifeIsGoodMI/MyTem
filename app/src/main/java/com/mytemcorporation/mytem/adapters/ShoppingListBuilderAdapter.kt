@@ -1,11 +1,13 @@
-package com.mytemcorporation.mytem
+package com.mytemcorporation.mytem.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.squareup.picasso.Picasso
+import com.mytemcorporation.mytem.Product
+import com.mytemcorporation.mytem.R
+import com.mytemcorporation.mytem.activities.ShoppingListBuilderActivity
 
 class ShoppingListBuilderAdapter(private var context: Context, private var items: Array<Product>) : BaseAdapter()
 {
