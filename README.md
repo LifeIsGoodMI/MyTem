@@ -6,6 +6,7 @@ the app will list the stores that have said Item in store sorted by the distance
 While the app works very good, getting access to all that information is of course difficult. It would require cooperation with every major & small store all around the 
 world. For that reason, the app is not published in any app store.
 Nevertheless, the app was a fun learning opportunity to engage more with Android development & Kotlin.
+**NOTE: Code is not yet documented/commented**
 
 # Features
 - Language agnostic. Currently, the app is available in English & German. Language is based on the device's language & culture settings
@@ -17,7 +18,7 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
   Store open, so the user can access all the additional informatio & services the Google Mapps app offers
 - Shopping List prototype, the user is able to build shopping lists by selecting multiple items. The shopping list can be altered during & after creation.
   Shopping lists are stored on the user's device locally, so that they persist after the app is terminated.
-  NOTE: This is a prototype, searching the list for store(s) is not possible yet.
+  **NOTE: This is a prototype, searching the list for store(s) is not possible yet.**
   
   
 # Screenshots
