@@ -20,8 +20,10 @@ const val ShoppingListsFileName = "shopping_lists"
 const val SearchHistoryFileMaxLineCount = 5
 const val ShoppingListFileMaxLineCount = 10
 
-const val APIKey = "AIzaSyBYvpfIeVTeGxVne-2zva8y7Uc5hLNUrpk"
+// Restricted Google API Key
+const val APIKey = "AIzaSyBYvpfIeVTeGxVne-2zva8y7Uc5hLNUrpk" 
 
+// Restricted Algolia key
 const val AlgoliaAppID = "IJFVFHU2H5"
 const val AlgoliaAPIKey = "6d9b2d92eab3b9065902807261fc95e1"
 const val AlgoliaProductIndex = "test_sampleData"
