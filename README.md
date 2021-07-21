@@ -24,15 +24,15 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
 
 **English, Emulator (Pixel 3 XL)**
 
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888296.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888306.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888313.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888328.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888344.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888355.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888368.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888395.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_1626888401.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888296.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888306.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888313.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888328.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888344.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888355.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888368.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888395.png)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888401.png)
 
 **German, Physical Device (Samsung Galaxy S10+)**
 
