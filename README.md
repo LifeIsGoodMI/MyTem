@@ -20,3 +20,5 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
   NOTE: This is a prototype, searching the list for store(s) is not possible yet.
   
   
+**Screenshots**
+![alt text](https://raw.githubusercontent.com/LifeIsGoodMI/MyTem/Screenshots/German_PhysicalDevice/Screenshot_20210721-190521_MyTem.png)
