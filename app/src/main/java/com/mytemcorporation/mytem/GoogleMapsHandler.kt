@@ -28,8 +28,6 @@ class GoogleMapsHandler(val boundActivity: AppCompatActivity, val googlePlacesMa
 
     private var scheduledActions: MutableList<() -> Unit> = mutableListOf()     // Scheduled calls to CenterMapOnMarkers. CenterMapOnMarkers might be called
                                                                                 // before the google map has been loaded, so these need to be scheduled.
-    //private lateinit var businesses: List<Business>                             // Parameters for a CenterMapOnMarkers scheduled call.
-    //private var businessCounter: Int = 0                                        // Increments every time a place was successfully fetched & a marker created for it.
     private lateinit var fetchedPlaces: Array<FetchedGooglePlace>               // Caches the details of fetched places when creating markers.
 
     private lateinit var boundsBuilder: LatLngBounds.Builder                    // The bounds builder to compute the bounds containing all set markers.
@@ -80,8 +78,6 @@ class GoogleMapsHandler(val boundActivity: AppCompatActivity, val googlePlacesMa
         map.clear()
         markers.clear()
         boundsBuilder = LatLngBounds.builder()
-
-        //fetchedPlaces = arrayOfNulls(businesses.count())
 
         for (fetchedGooglePlaces in fetchedPlaces)
         {
@@ -144,7 +140,6 @@ class GoogleMapsHandler(val boundActivity: AppCompatActivity, val googlePlacesMa
 
     public fun OpenMapsAppFromUri(fetchedPlace: FetchedGooglePlace)
     {
-        //val uriString = "https://www.google.com/maps/search/?api=1&query=${fetchedPlace.address}&query_place_id=${fetchedPlace.id}"
         val query = fetchedPlace.name + "%2C+" + fetchedPlace.address
         val uriString = "https://www.google.com/maps/search/?api=1&query=${query}"
         val uri = android.net.Uri.parse(uriString)
