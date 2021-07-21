@@ -1,7 +1,7 @@
 # MyTem - Item locator app
 
-The idea behind MyTem is to create an app that enables the user to search for an item (in my testing I used mainly food & drinks), if the item is listed in the database
-the app will list the stores that have said Item in store sorted by the distance to the user's current positon.
+The idea behind MyTem is to create an app that enables the user to search for a product (in my testing I used mainly food & drinks), if the product is listed in the database
+the app will list the stores that have said product in store sorted by the distance to the user's current positon.
 
 While the app works very good, getting access to all that information is of course difficult. It would require cooperation with every major & small store all around the 
 world. For that reason, the app is not published in any app store.
