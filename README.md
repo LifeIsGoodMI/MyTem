@@ -21,4 +21,4 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
   
   
 **Screenshots**
-![alt text](https://raw.githubusercontent.com/LifeIsGoodMI/MyTem/Screenshots/German_PhysicalDevice/Screenshot_20210721-190521_MyTem.jpg)
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190521_MyTem.jpg)
