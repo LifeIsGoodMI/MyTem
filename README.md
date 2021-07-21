@@ -23,15 +23,28 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
 # Screenshots
 # English, Emulator (Pixel 3 XL)
 
+## Main Screen
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888296.png)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888306.png)
+
+## Creating/editing a shopping list
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888313.png)
+
+## Entering anything in the top search bar will immediately display results. This is always available as it provides a fast & smooth user experience
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888328.png)
+
+## Clicking on one of the search results will list the stores that have the searched product in stock
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888344.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888355.png)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888368.png)
+
+## Alternatively, a click on the Google Maps button in the bottom right corner will display all stores on the interactive map
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888395.png)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888401.png)
+
+## Clicking on one of the stores will display a more detailed view of the store
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888355.png)
+
+## Another click on the Google Maps button will immediately switch to the Google Maps application with the store page open
+![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888368.png)
 
 
 <!--- 
