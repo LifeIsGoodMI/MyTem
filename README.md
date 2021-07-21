@@ -7,7 +7,7 @@ While the app works very good, getting access to all that information is of cour
 world. For that reason, the app is not published in any app store.
 Nevertheless, the app was a fun learning opportunity to engage more with Android development & Kotlin.
 
-**Features**
+# Features
 - Language agnostic. Currently, the app is available in English & German. Language is based on the device's language & culture settings
 - Rapid search function that queries the underlying database
 - Geolocation sorting. The app asks for permission to access the user's last known position & sorts stores based on that
@@ -20,9 +20,8 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
   NOTE: This is a prototype, searching the list for store(s) is not possible yet.
   
   
-**Screenshots**
-
-**English, Emulator (Pixel 3 XL)**
+# Screenshots
+# English, Emulator (Pixel 3 XL)
 
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888296.png)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/English_Emulator/Screenshot_1626888306.png)
@@ -36,7 +35,7 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
 
 
 
-**German, Physical Device (Samsung Galaxy S10+)**
+# German, Physical Device (Samsung Galaxy S10+)
 
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190521_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190526_MyTem.jpg)
