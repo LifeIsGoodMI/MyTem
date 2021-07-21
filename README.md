@@ -27,7 +27,6 @@ Nevertheless, the app was a fun learning opportunity to engage more with Android
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190521_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190526_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190532_MyTem.jpg)
-![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190559_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190617_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190628_MyTem.jpg)
 ![alt text](https://github.com/LifeIsGoodMI/MyTem/blob/master/Screenshots/German_PhysicalDevice/Screenshot_20210721-190740_MyTem.jpg)
